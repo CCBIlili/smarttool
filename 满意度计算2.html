@@ -1,0 +1,87 @@
+<!DOCTYPE  html>
+<html  lang="cn">
+<head>
+<meta  charset="UTF-8">
+<meta  name="viewport"  content="width=device-width,  initial-scale=1.0">
+<title>Cost  Calculator</title>
+<style>
+    body  {
+      font-family:  Arial,  sans-serif;
+      margin:  0;
+      padding:  0;
+      display:  flex;
+      justify-content:  center;
+      align-items:  center;
+      height:  100vh;
+    }
+    .calculator  {
+      text-align:  center;
+      border:  1px  solid  #ddd;
+      padding:  20px;
+      border-radius:  5px;
+      box-shadow:  0  2px  4px  rgba(0,  0,  0,  0.1);
+    }
+    input[type="number"]  {
+      margin:  10px  0;
+      padding:  10px;
+      width:  calc(100%  -  22px);
+      border:  1px  solid  #ddd;
+      border-radius:  5px;
+    }
+    button  {
+      padding:  10px  20px;
+      border:  none;
+      background-color:  #5cb85c;
+      color:  white;
+      border-radius:  5px;
+      cursor:  pointer;
+    }
+    button:hover  {
+      background-color:  #4cae4c;
+    }
+</style>
+</head>
+<body>
+<div  class="calculator">
+    <h2>满意度计算小工具</h2>
+    <input  type="number"  id="call"  placeholder="有效回复量"  />
+    <input  type="number"  id="a"  placeholder="咨询整体感知总得分"  />
+    <input  type="number"  id="b"  placeholder="咨询话务员服务态度总得分"  />
+    <input  type="number"  id="c"  placeholder="话务员服务技能总得分"  />
+    <input  type="number"  id="d"  placeholder="问题解决情况总得分"  />
+    <button  onclick="calculateCost()">计算</button>
+    <div  id="result1"></div>
+    <div  id="result2"></div>
+</div>
+
+<script>
+      function  calculateCost()  {
+          var  call  =  document.getElementById('call').value;
+          var  a  =  document.getElementById('a').value;
+          var  b  =  document.getElementById('b').value;
+          var  c  =  document.getElementById('c').value;
+          var  d  =  document.getElementById('d').value;
+
+          //  检查输入是否为有效数字
+          if  (isNaN(call)  ||  call  <=  0  ||  isNaN(a)  ||  isNaN(b)  ||  isNaN(c)  ||  isNaN(d))  {
+              alert("请输入有效的数字！");
+              return;
+          }
+
+          //  计算满意度
+          var  cost1  =  ((a  /  call  -  1)  /  9  *  0.1  +  (b  /  call  -  1)  /  9  *  0.2  +  (c  /  call  -  1)  /  9  *  0.2  +  (d  /  call  -  1)  /  9  *  0.5)  *  100;
+          var  cost2;
+          if  (cost1  >=  97.5)  {
+              cost2  =  "指标已达标";
+          }  else  {
+              cost2  =  Math.ceil((0.1  *  a  +  0.2  *  b  +  0.2  *  c  +  0.5  *  d  -  call  -  0.975  *  call  *  9)  /  (0.975  *  9  -  9));
+          }
+          document.getElementById('result1').innerText  =  "咨询满意度:  "  +  cost1.toFixed(2);
+          document.getElementById('result2').innerText  =  "需要全满分回复量:  "  +  cost2;
+      }
+</script>
+
+    }
+</script>
+</body>
+</html>
